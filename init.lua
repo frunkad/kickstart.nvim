@@ -114,6 +114,18 @@ vim.opt.showmode = false
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.opt.clipboard = 'unnamedplus'
+vim.g.clipboard = {
+  name = 'OSC 52',
+  copy = {
+    ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+    ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+  },
+  paste = {
+    ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+    ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+  },
+}
+
 
 -- Enable break indent
 vim.opt.breakindent = true
@@ -175,10 +187,10 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- TIP: Disable arrow keys in normal mode
-vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
-vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
-vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
-vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+-- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
+-- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
+-- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
+-- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -274,7 +286,7 @@ require('lazy').setup({
   -- after the plugin has been loaded:
   --  config = function() ... end
 
-  { -- Useful plugin to show you pending keybinds.
+  {                     -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     config = function() -- This is the function that runs, AFTER loading
@@ -323,7 +335,7 @@ require('lazy').setup({
       { 'nvim-telescope/telescope-ui-select.nvim' },
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -416,7 +428,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP.
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim',       opts = {} },
 
       -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
       -- used for completion, annotations and signatures of Neovim apis
@@ -573,7 +585,7 @@ require('lazy').setup({
         },
       }
       lspconfig.rubocop.setup {}
-      lspconfig.vtsls.setup {}
+      -- lspconfig.vtsls.setup {}
       -- lspconfig.tsserver.setup {
       --  init_options = {
       --    formatter = 'standard',
@@ -916,7 +928,7 @@ require('lazy').setup({
   {
     'NeogitOrg/neogit',
     dependencies = {
-      'nvim-lua/plenary.nvim', -- required
+      'nvim-lua/plenary.nvim',  -- required
       'sindrets/diffview.nvim', -- optional - Diff integration
 
       -- Only one of these is needed.
@@ -1047,7 +1059,7 @@ require('lazy').setup({
     'romgrk/barbar.nvim',
     enabled = false,
     dependencies = {
-      'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
+      'lewis6991/gitsigns.nvim',     -- OPTIONAL: for git status
       'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
     },
     init = function()
