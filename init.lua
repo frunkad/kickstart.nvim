@@ -175,6 +175,9 @@ vim.keymap.set('i', 'jj', '<Esc>')
 vim.keymap.set('i', 'kk', '<Esc>')
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<leader>gg', '<cmd>Neogit<CR>', { desc = '[g] Neogit' })
+vim.keymap.set('n', '<leader>cd', function()
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end, { desc = '[d] Toggle diagnostic' })
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
@@ -374,6 +377,9 @@ require('lazy').setup({
             require('telescope.themes').get_dropdown(),
           },
         },
+        defaults = {
+          path_display = { "smart" }
+        }
       }
 
       -- Enable Telescope extensions if they are installed
@@ -690,16 +696,16 @@ require('lazy').setup({
         }
       end,
       formatters_by_ft = {
-        lua = { 'stylua' },
+        -- lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
-        javascript = { 'prettierd', 'prettier', stop_after_first = true },
-        javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
-        typescript = { 'prettierd', 'prettier', stop_after_first = true },
-        typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+        -- javascript = { 'prettierd', 'prettier', stop_after_first = true },
+        -- javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+        -- typescript = { 'prettierd', 'prettier', stop_after_first = true },
+        -- typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
       },
     },
   },
@@ -1096,6 +1102,9 @@ require('lazy').setup({
   {
     'tpope/vim-fugitive',
   },
+  {
+    'sindrets/diffview.nvim',
+  },
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
@@ -1111,7 +1120,7 @@ require('lazy').setup({
   -- require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.neo-tree',
-  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+  require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
